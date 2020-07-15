@@ -1,7 +1,7 @@
 name: 'Close stale'
 on:
   schedule:
-  - cron: '*/5 * * * *'
+  - cron: '* * * * *' # Runs everyday
 
 jobs:
   stale:
@@ -9,20 +9,21 @@ jobs:
     steps:
     - uses: 'actions/stale@v3'
       with:
-        repo-token: '${{ secrets.GITHUB_TOKEN }}'
+        repo-token: '${{ secrets.GITHUB_TOKEN }}' # No need to setup
 
         stale-issue-message: |-
-          This issue is stale because it has been open for 14 days with no
-          activity. It will automatically close after 7 more days of inactivity.
-        stale-issue-label: 'kind/stale'
-        exempt-issue-labels: 'priority/important-soon,kind/bug,kind/privacy'
+          This issue is stale because it has been open for 90 days with no
+          activity. It will automatically close after 30 more days of
+          inactivity. \nReopen the issue with `/reopen`.\nMark the issue as
+          fresh by adding the comment `/remove-lifecycle rotten`.
+        stale-issue-label: 'lifecycle/rotten'
 
         stale-pr-message: |-
-          This Pull Request is stale because it has been open for 14 days with
-          no activity. It will automatically close after 7 more days of
-          inactivity.
-        stale-pr-label: 'kind/stale'
-        exempt-pr-labels: 'priority/important-soon,kind/bug,kind/privacy'
+          This Pull Request is stale because it has been open for 90 days with
+          no activity. It will automatically close after 30 more days of
+          inactivity. \nReopen with `/reopen`.\nMark as fresh by adding the
+          comment `/remove-lifecycle rotten`.
+        stale-pr-label: 'lifecycle/rotten'
 
         days-before-stale: 1
         days-before-close: 1
